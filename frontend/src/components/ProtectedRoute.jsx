@@ -1,10 +1,12 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import api from "../api";
 import { REFRESH_TOKEN, ACCESS_TOKEN } from "../constants";
 
-function ProtectedRoute({ children }) {
+function ProtectedRoute({ children, redirectTo }) {
   const [isAuthorized, setIsAuthorized] = useState(null);
 
   useEffect(() => {
@@ -49,6 +51,10 @@ function ProtectedRoute({ children }) {
 
   if (isAuthorized === null) {
     return <div>Loading...</div>;
+  }
+
+  if (isAuthorized && redirectTo) {
+    return <Navigate to={redirectTo} />;
   }
 
   return isAuthorized ? children : <Navigate to="/login" />;

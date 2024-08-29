@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import react from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/Login";
@@ -28,9 +29,23 @@ function App() {
             </ProtectedRoute>
           }
         />
-        <Route path="/login" element={<Login />} />
+        <Route
+          path="/login"
+          element={
+            <ProtectedRoute redirectTo="/home">
+              <Login />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <ProtectedRoute redirectTo="/home">
+              <RegisterAndLogout />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/logout" element={<Logout />} />
-        <Route path="/register" element={<RegisterAndLogout />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
